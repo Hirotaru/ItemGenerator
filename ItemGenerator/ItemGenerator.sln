@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemGenerator", "ItemGenera
 		{165D87F2-F9F4-40E8-88A4-D81C61B32AF7} = {165D87F2-F9F4-40E8-88A4-D81C61B32AF7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NameGenerator", "NameGenerator\NameGenerator\NameGenerator.csproj", "{165D87F2-F9F4-40E8-88A4-D81C61B32AF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NameGenerator", "NameGenerator\NameGenerator.csproj", "{165D87F2-F9F4-40E8-88A4-D81C61B32AF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

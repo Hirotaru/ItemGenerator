@@ -8,7 +8,7 @@ namespace NameGenerator
 {
     public static class WordChainBuilder
     {
-        private static readonly int chance = 85;
+        private static readonly int chance = 70;
 
         private static Random rand = new Random(DateTime.Now.Millisecond);
 
