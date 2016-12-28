@@ -19,7 +19,7 @@ namespace NameGenerator
         LegendaryObjectAdjective,
     }
 
-    public static class Util
+    public static class WordManager
     {
         private static Random rand = new Random(DateTime.Now.Millisecond);
 

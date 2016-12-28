@@ -27,8 +27,6 @@ namespace NameGenerator
 
         public static WordChain Build()
         {
-            //chain.Clear();
-
             currentRank = 0;
 
             while (rand.Next(0, 100) < chance)
@@ -60,7 +58,7 @@ namespace NameGenerator
                 {
                     case PatternParts.Subject:
                         {
-                            Word w = Util.GetRandomSubject();
+                            Word w = WordManager.GetRandomSubject();
 
                             chain.AddWord(w);
                             chain.Subj = w.Root;
@@ -70,44 +68,44 @@ namespace NameGenerator
 
                     case PatternParts.Object:
                         {
-                            chain.AddWord(Util.GetRandomObject());
+                            chain.AddWord(WordManager.GetRandomObject());
                             break;
                         }
 
                     case PatternParts.SubObject:
                         {
-                            chain.AddWord(Util.GetRandomSubObject());
+                            chain.AddWord(WordManager.GetRandomSubObject());
                             break;
                         }
 
                     case PatternParts.Adjective:
                     case PatternParts.ObjAdjective:
                         {
-                            chain.AddWord(Util.GetRandomObjAdj());
+                            chain.AddWord(WordManager.GetRandomObjAdj());
                             break;
                         }
 
                     case PatternParts.Adverb:
                         {
-                            chain.AddWord(Util.GetRandomAdv());
+                            chain.AddWord(WordManager.GetRandomAdv());
                             break;
                         }
 
                     case PatternParts.ItemAdjective:
                         {
-                            chain.AddWord(Util.GetRandomItemAdj());
+                            chain.AddWord(WordManager.GetRandomItemAdj());
                             break;
                         }
 
                     case PatternParts.LegendaryItemAdjective:
                         {
-                            chain.AddWord(Util.GetRandomLegendaryItemAdj());
+                            chain.AddWord(WordManager.GetRandomLegendaryItemAdj());
                             break;
                         }
 
                     case PatternParts.LegendaryObjectAdjective:
                         {
-                            chain.AddWord(Util.GetRandomLegendaryObjectAdj());
+                            chain.AddWord(WordManager.GetRandomLegendaryObjectAdj());
                             break;
                         }
                 }

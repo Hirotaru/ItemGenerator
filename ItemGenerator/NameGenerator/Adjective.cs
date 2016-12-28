@@ -19,7 +19,7 @@ namespace NameGenerator
 
         public override string ToString()
         {
-            if (Util.ExceptionalAdjectiveRoots.Contains(Root))
+            if (WordManager.ExceptionalAdjectiveRoots.Contains(Root))
             {
                 switch (Root)
                 {

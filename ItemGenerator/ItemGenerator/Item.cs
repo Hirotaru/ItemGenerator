@@ -40,6 +40,10 @@ namespace ItemGenerator
             Color.FromArgb(255, 95, 41),
         };
 
+        public int minDmg;
+
+        public int maxDmg;
+
 
         public int Rank
         {
@@ -66,11 +70,13 @@ namespace ItemGenerator
         {
             this.chain = chain;
             LoadImage();
+            minDmg = Util.CalculateDamage(Rank);
+            maxDmg = minDmg + Util.CalculateDamageSpread(Rank);
         }
 
         private void LoadImage()
         {
-            string path = @"..\..\Images\" + Util.SubjectsFoldres[chain.Subj];
+            string path = @"..\..\Images\" + WordManager.SubjectsFoldres[chain.Subj];
 
             int filesCount = Directory.EnumerateFiles(path).ToList().Count;
 

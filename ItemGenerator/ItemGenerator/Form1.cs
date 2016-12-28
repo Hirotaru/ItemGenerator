@@ -37,6 +37,8 @@ namespace ItemGenerator
 
             pictureBox1.Image = lastItem.Img;
 
+            label1.Text = "Урон: " + item.minDmg + "—" + item.maxDmg;
+
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
