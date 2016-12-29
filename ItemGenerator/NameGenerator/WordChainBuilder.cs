@@ -8,7 +8,7 @@ namespace NameGenerator
 {
     public static class WordChainBuilder
     {
-        private static readonly int chance = 70;
+        private static int chance = 70;
 
         private static Random rand = new Random(DateTime.Now.Millisecond);
 
@@ -25,21 +25,21 @@ namespace NameGenerator
             set { currentRank = value; }
         }
 
-        public static WordChain Build()
+        public static WordChain Build(int rank = -1)
         {
-            currentRank = 0;
+            currentRank = (rank == -1) ? 0 : rank;
 
             while (rand.Next(0, 100) < chance)
             {
                 currentRank++;
 
-                if (currentRank == PatternPack.Count - 1)
+                if (currentRank == PatternPack.ItemCount - 1)
                 {
                     break;
                 }
             }
 
-            pattern = PatternPack.Patterns[currentRank];
+            pattern = PatternPack.ItemPatterns[currentRank];
 
             WordChain chain = new WordChain(pattern, currentRank);
 
@@ -48,67 +48,73 @@ namespace NameGenerator
             return chain;   
         }
 
+        public static WordChain BuildPotion(int rank = -1)
+        {
+            currentRank = (rank == -1) ? 0 : rank;
 
+            while (rand.Next(0, 100) < chance)
+            {
+                currentRank++;
+
+                if (currentRank == PatternPack.PotionCount - 1)
+                {
+                    break;
+                }
+            }
+
+            pattern = PatternPack.PotionPatterns[currentRank];
+
+            WordChain chain = new WordChain(pattern, currentRank);
+
+            BuildChain(chain);
+
+            return chain;
+        }
+
+        public static WordChain Build(ItemType type)
+        {
+            switch (type)
+            {
+                case ItemType.Potion:
+                    {
+                        return BuildPotion();
+                    }
+
+                case ItemType.Equipment:
+                case ItemType.Spell:
+                case ItemType.Weapon:
+                    {
+                        return Build();
+                    }
+
+                default:
+                    return null;
+            }
+        }
+
+        public static bool SetUpgradeChance(int chance)
+        {
+            if (chance > 99) return false;
+
+            if (chance < 1) return false;
+
+            WordChainBuilder.chance = chance;
+
+            return true;
+        }
 
         private static void BuildChain(WordChain chain)
         {
             foreach (var item in pattern)
             {
-                switch (item)
+                if (item is PatternParts.Subject || item is PatternParts.Potion)
                 {
-                    case PatternParts.Subject:
-                        {
-                            Word w = WordManager.GetRandomSubject();
-
-                            chain.AddWord(w);
-                            chain.Subj = w.Root;
-
-                            break;
-                        }
-
-                    case PatternParts.Object:
-                        {
-                            chain.AddWord(WordManager.GetRandomObject());
-                            break;
-                        }
-
-                    case PatternParts.SubObject:
-                        {
-                            chain.AddWord(WordManager.GetRandomSubObject());
-                            break;
-                        }
-
-                    case PatternParts.Adjective:
-                    case PatternParts.ObjAdjective:
-                        {
-                            chain.AddWord(WordManager.GetRandomObjAdj());
-                            break;
-                        }
-
-                    case PatternParts.Adverb:
-                        {
-                            chain.AddWord(WordManager.GetRandomAdv());
-                            break;
-                        }
-
-                    case PatternParts.ItemAdjective:
-                        {
-                            chain.AddWord(WordManager.GetRandomItemAdj());
-                            break;
-                        }
-
-                    case PatternParts.LegendaryItemAdjective:
-                        {
-                            chain.AddWord(WordManager.GetRandomLegendaryItemAdj());
-                            break;
-                        }
-
-                    case PatternParts.LegendaryObjectAdjective:
-                        {
-                            chain.AddWord(WordManager.GetRandomLegendaryObjectAdj());
-                            break;
-                        }
+                    Word w = WordManager.GetAWord(item);
+                    chain.Subj = w.Root;
+                    chain.AddWord(w);
                 }
+                else
+                chain.AddWord(WordManager.GetAWord(item));
             }
         }
     }

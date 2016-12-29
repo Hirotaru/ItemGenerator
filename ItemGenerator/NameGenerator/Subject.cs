@@ -8,10 +8,7 @@ namespace NameGenerator
 {
     public class Subject : Noun
     {
-        public Object FormObject()
-        {
-            return null;
-        }
+
     }
 
     public class Object : Noun

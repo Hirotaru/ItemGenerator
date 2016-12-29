@@ -9,41 +9,37 @@ using System.IO;
 
 namespace ItemGenerator
 {
-    public enum ItemType
-    {
-        Weapon,
-        Spell,
-        Potion,
-        Equipment,
-    }
-
     public class Item
     {
         private static Random rand = new Random();
 
-        private static List<Color> itemColors = new List<Color>()
+        private ItemType type;
+
+        public ItemType Type
         {
-            Color.FromArgb(133, 133, 133),
+            get { return type; }
+            private set { type = value; }
+        }
 
-            Color.FromArgb(222, 222, 222),
 
-            Color.FromArgb(140, 255, 41),
 
-            Color.FromArgb(41, 163, 255),
+        private Damage dmg;
 
-            Color.FromArgb(202, 41, 255),
+        public Damage Dmg
+        {
+            get { return dmg; }
+            private set { dmg = value; }
+        }
 
-            Color.FromArgb(248, 231, 28),
+        public double MinDmg
+        {
+            get { return dmg.MinDamage; }
+        }
 
-            Color.FromArgb(255, 155, 0),
-
-            Color.FromArgb(255, 95, 41),
-        };
-
-        public int minDmg;
-
-        public int maxDmg;
-
+        public double MaxDmg
+        {
+            get { return dmg.MaxDamage; }
+        }
 
         public int Rank
         {
@@ -70,8 +66,7 @@ namespace ItemGenerator
         {
             this.chain = chain;
             LoadImage();
-            minDmg = Util.CalculateDamage(Rank);
-            maxDmg = minDmg + Util.CalculateDamageSpread(Rank);
+            dmg = new Damage(Rank);
         }
 
         private void LoadImage()
@@ -80,24 +75,47 @@ namespace ItemGenerator
 
             int filesCount = Directory.EnumerateFiles(path).ToList().Count;
 
-            Bitmap b = (Bitmap)Bitmap.FromFile(path + @"\" + rand.Next(0, filesCount) + ".png");
+            Bitmap b = (Bitmap)Image.FromFile(path + @"\" + rand.Next(0, filesCount) + ".png");
 
+            FixImage(b);
+
+            img = b;
+        }
+
+        private void FixImage(Bitmap b)
+        {
             for (int x = 0; x < b.Width; x++)
             {
                 for (int y = 0; y < b.Height; y++)
                 {
 
-                    if (b.GetPixel(x, y).A == 0)
+                    if (b.GetPixel(x, y).A == 0 || b.GetPixel(x, y).B > 91)
                     {
-                        b.SetPixel(x, y, Item.itemColors[Rank]);
+                        switch (type)
+                        {
+                            case ItemType.Potion:
+                                {
+                                    b.SetPixel(x, y, Visual.PotionColors[Rank]);
+                                    break;
+                                }
+
+                            case ItemType.Equipment:
+                            case ItemType.Spell:
+                            case ItemType.Weapon:
+                                {
+                                    b.SetPixel(x, y, Visual.itemColors[Rank]);
+                                    break;
+                                }
+                        }
                     }
                 }
             }
-
-            img = b;
         }
 
-
+        ~Item()
+        {
+            img.Dispose();
+        }
 
 
     }

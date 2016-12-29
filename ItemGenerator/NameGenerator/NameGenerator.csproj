@@ -52,7 +52,7 @@
     <Compile Include="PatternPack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subject.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="WordManager.cs" />
     <Compile Include="Word.cs" />
     <Compile Include="WordChain.cs" />
     <Compile Include="WordChainBuilder.cs" />

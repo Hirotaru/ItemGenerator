@@ -27,7 +27,7 @@ namespace ItemGenerator
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Item item = new Item(WordChainBuilder.Build());
+            Item item = new Item(WordChainBuilder.BuildPotion());
 
             lastItem = item;
 
@@ -37,7 +37,7 @@ namespace ItemGenerator
 
             pictureBox1.Image = lastItem.Img;
 
-            label1.Text = "Урон: " + item.minDmg + "—" + item.maxDmg;
+            //label1.Text = "Урон: " + item.MinDmg + "—" + item.MaxDmg;
 
         }
 
@@ -52,7 +52,7 @@ namespace ItemGenerator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            WordChainBuilder.SetUpgradeChance(99);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

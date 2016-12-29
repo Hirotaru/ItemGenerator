@@ -17,11 +17,58 @@ namespace NameGenerator
         SubObject,
         LegendaryItemAdjective,
         LegendaryObjectAdjective,
+        Potion,
+        SmallPotionAdjective,
+        MediumPotionAdjective,
+        HugePotionAdjective,
+        PotionObject,
+        
+    }
+
+    public enum ItemType
+    {
+        Weapon,
+        Spell,
+        Potion,
+        Equipment,
     }
 
     public static class WordManager
     {
         private static Random rand = new Random(DateTime.Now.Millisecond);
+
+        internal static List<string> Potion = new List<string>()
+        {
+            "ЗельеС1",
+        };
+
+        internal static List<string> SmallPotionAdj = new List<string>()
+        {
+            "Мал",
+            "Слаб",
+        };
+
+        internal static List<string> MediumPotionAdj = new List<string>()
+        {
+            "Средн",
+            "Обычн",
+        };
+
+        internal static List<string> HugePotionAdj = new List<string>()
+        {
+            "Больш",
+        };
+
+        internal static List<string> PotionObject = new List<string>()
+        {
+            "МаныЖ1",
+            "ОтравленияС1",
+            "ЗдоровьяС1",
+            "Восстановления ЗдоровьяС1",
+            "ЗамедленияС1",
+            "СтрахаМ1",
+            "ЖизниЖ1",
+        };
 
         internal static List<string> ObjAdjectiveRoots = new List<string>()
         {
@@ -51,7 +98,6 @@ namespace NameGenerator
             "Темн",
             "Светл",
             "Проклят",
-            "Кровав",
             "Ядовит",
             "Магическ",
         };
@@ -74,9 +120,16 @@ namespace NameGenerator
             "Древн",
         };
 
+
+
         internal static List<string> ExceptionalAdjectiveRoots = new List<string>()
         {
             "Эпическ",
+            "Магическ",
+            "Древн",
+            "Демоническ",
+            "Средн",
+            "Больш",
         };
 
         internal static List<string> Adverbs = new List<string>()
@@ -117,6 +170,8 @@ namespace NameGenerator
             { "Самурайский Меч", "Katana" },
             { "Кольцо", "Ring" },
             { "Коса", "Scythe" },
+            { "Молот", "Hammer" },
+            { "Зелье", "Potion" },
         };
 
 
@@ -127,6 +182,7 @@ namespace NameGenerator
             "ЩитМ1",
             "МечМ1",
             "ТопорМ1",
+            "МолотМ1",
             "Парные Мечи2",
             "ШлемМ1",
             "КапюшонМ1",
@@ -167,7 +223,7 @@ namespace NameGenerator
             "РаздораМ1",
         };
 
-        private static Word ConvertStringsToSubj(string s)
+        private static Word ConvertStringToSubj(string s)
         {
             Subject w = new Subject();
 
@@ -215,7 +271,7 @@ namespace NameGenerator
             return w;
         }
 
-        private static Word ConvertStringsToObj(string s)
+        private static Word ConvertStringToObj(string s)
         {
             Object w = new Object();
 
@@ -285,7 +341,7 @@ namespace NameGenerator
 
         internal static Word GetRandomSubject()
         {
-            return ConvertStringsToSubj(Subjects[rand.Next(0, Subjects.Count)]);
+            return ConvertStringToSubj(Subjects[rand.Next(0, Subjects.Count)]);
         }
 
         internal static Word GetRandomAdv()
@@ -295,12 +351,12 @@ namespace NameGenerator
 
         internal static Word GetRandomObject()
         {
-            return ConvertStringsToObj(Objects[rand.Next(0, Objects.Count)]);
+            return ConvertStringToObj(Objects[rand.Next(0, Objects.Count)]);
         }
 
         internal static Word GetRandomSubObject()
         {
-            return ConvertStringsToObj(SubObjects[rand.Next(0, SubObjects.Count)]);
+            return ConvertStringToObj(SubObjects[rand.Next(0, SubObjects.Count)]);
         }
 
         internal static Word GetRandomObjAdj()
@@ -321,6 +377,105 @@ namespace NameGenerator
         internal static Word GetRandomLegendaryObjectAdj()
         {
             return ConvertStringToAdj(LegendaryObjectAdjectiveRoots[rand.Next(0, LegendaryObjectAdjectiveRoots.Count)]);
+        }
+
+        internal static Word GetRandomPotion()
+        {
+            return ConvertStringToSubj(Potion[rand.Next(0, Potion.Count)]);
+        }
+
+        internal static Word GetRandomPotionObject()
+        {
+            return ConvertStringToObj(PotionObject[rand.Next(0, PotionObject.Count)]);
+        }
+
+        internal static Word GetRandomSmallPotionAdj()
+        {
+            return ConvertStringToAdj(SmallPotionAdj[rand.Next(0, SmallPotionAdj.Count)]);
+        }
+
+        internal static Word GetRandomMediumPotionAdj()
+        {
+            return ConvertStringToAdj(MediumPotionAdj[rand.Next(0, MediumPotionAdj.Count)]);
+        }
+
+        internal static Word GetRandomHugePotionAdj()
+        {
+            return ConvertStringToAdj(HugePotionAdj[rand.Next(0, HugePotionAdj.Count)]);
+        }
+
+        internal static Word GetAWord(PatternParts part)
+        {
+            switch (part)
+            {
+                case PatternParts.Subject:
+                    {
+                        return GetRandomSubject();
+                    }
+
+                case PatternParts.Object:
+                    {
+                        return GetRandomObject();
+                    }
+
+                case PatternParts.SubObject:
+                    {
+                        return GetRandomSubObject();
+                    }
+
+                case PatternParts.Adjective:
+                case PatternParts.ObjAdjective:
+                    {
+                        return GetRandomObjAdj();
+                    }
+
+                case PatternParts.Adverb:
+                    {
+                        return GetRandomAdv();
+                    }
+
+                case PatternParts.ItemAdjective:
+                    {
+                        return GetRandomItemAdj();
+                    }
+
+                case PatternParts.LegendaryItemAdjective:
+                    {
+                        return GetRandomLegendaryItemAdj();
+                    }
+
+                case PatternParts.LegendaryObjectAdjective:
+                    {
+                        return GetRandomLegendaryObjectAdj();
+                    }
+
+                case PatternParts.SmallPotionAdjective:
+                    {
+                        return GetRandomSmallPotionAdj();
+                    }
+
+                case PatternParts.MediumPotionAdjective:
+                    {
+                        return GetRandomMediumPotionAdj();
+                    }
+
+                case PatternParts.HugePotionAdjective:
+                    {
+                        return GetRandomHugePotionAdj();
+                    }
+
+                case PatternParts.Potion:
+                    {
+                        return GetRandomPotion();
+                    }
+
+                case PatternParts.PotionObject:
+                    {
+                        return GetRandomPotionObject();
+                    }
+            }
+
+            return null;
         }
     }
 }

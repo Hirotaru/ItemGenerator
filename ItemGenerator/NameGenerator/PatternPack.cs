@@ -8,7 +8,7 @@ namespace NameGenerator
 {
     public static class PatternPack
     {
-        public static readonly List<List<PatternParts>> Patterns = new List<List<PatternParts>>()
+        public static readonly List<List<PatternParts>> ItemPatterns = new List<List<PatternParts>>()
         {
             new List<PatternParts>()
             {
@@ -73,9 +73,38 @@ namespace NameGenerator
 
         };
 
-        public static int Count
+        public static readonly List<List<PatternParts>> PotionPatterns = new List<List<PatternParts>>()
         {
-            get { return Patterns.Count; }
+            new List<PatternParts>()
+            {
+                PatternParts.SmallPotionAdjective,
+                PatternParts.Potion,
+                PatternParts.PotionObject,
+            },
+
+            new List<PatternParts>()
+            {
+                PatternParts.MediumPotionAdjective,
+                PatternParts.Potion,
+                PatternParts.PotionObject,
+            },
+
+            new List<PatternParts>()
+            {
+                PatternParts.HugePotionAdjective,
+                PatternParts.Potion,
+                PatternParts.PotionObject,
+            },
+        };
+
+        public static int ItemCount
+        {
+            get { return ItemPatterns.Count; }
+        }
+
+        public static int PotionCount
+        {
+            get { return PotionPatterns.Count; }
         }
     }
 }
